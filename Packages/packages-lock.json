@@ -34,6 +34,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.zerowq.unityplugin.packageeditor": {
+      "version": "ssh://git@github.com/UnityPlugin/PackageEditor.git?path=/Assets/UnityPlugin/PackageEditor",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "cce948c7d47fe793db95b47d0e099e24aa0c8f96"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

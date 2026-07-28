@@ -12,19 +12,63 @@ namespace UnityPlugin.EditorUtils
     {
         static Dictionary<string, GUIContent> _guiContentCache = new Dictionary<string, GUIContent>();
 
-        public static GUIContent GetGUIContent(string name)
+        static GUIContent _tempContent;
+
+        public static GUIContent TmpC(string text = null, Texture image = null, string tooltip = null)
+        {
+            if (_tempContent == null) _tempContent = new GUIContent();
+
+            _tempContent.text = text;
+            _tempContent.image = image;
+            _tempContent.tooltip = tooltip;
+
+            return _tempContent;
+        }
+
+        public static GUIContent GetC(string name, string text = null, Texture image = null, string tooltip = null)
+        {
+            return GetGUIContent(name, text, image, tooltip);
+        }
+
+        public static GUIContent GetGUIContent(string name, string text = null, Texture image = null, string tooltip = null)
         {
             if (!_guiContentCache.TryGetValue(name, out var label))
             {
                 label = new GUIContent(name);
                 _guiContentCache[name] = label;
             }
+
+            if (!string.IsNullOrEmpty(text)) label.text = text;
+            if (image) label.image = image;
+            if (!string.IsNullOrEmpty(tooltip)) label.tooltip = tooltip;
             return label;
+        }
+
+        public static void ClearGUIContent(string removeKey = null)
+        {
+            if (string.IsNullOrEmpty(removeKey))
+            {
+                _guiContentCache.Clear();
+            }
+            else
+            {
+
+                var list = new List<string>();
+                foreach (var key in _guiContentCache.Keys)
+                {
+                    if (key.Contains(removeKey)) list.Add(key);
+                }
+
+                for (var i = 0; i < list.Count; i++)
+                {
+                    _guiContentCache.Remove(list[i]);
+                }
+            }
         }
 
         public static T ObjectField<T>(string name, T obj) where T : Object
         {
-            return EditorGUILayout.ObjectField(GetGUIContent(name), obj, typeof(T), false) as T;
+            return EditorGUILayout.ObjectField(GetC(name), obj, typeof(T), false) as T;
         }
 
         #region Event
@@ -89,7 +133,7 @@ namespace UnityPlugin.EditorUtils
                 {
                     fold = true;
                 }
-                name = GetGUIContent(key);
+                name = GetC(key);
 
                 if (headerGroup)
                 {
@@ -243,7 +287,7 @@ namespace UnityPlugin.EditorUtils
             public void Begin(string label, params GUILayoutOption[] options)
             {
                 key = label;
-                name = GetGUIContent(label);
+                name = GetC(label);
                 EditorGUILayout.BeginHorizontal(options);
                 EditorGUILayout.PrefixLabel(name);
 
@@ -336,7 +380,7 @@ namespace UnityPlugin.EditorUtils
 
                     if (showLabel)
                     {
-                        name = GetGUIContent(key);
+                        name = GetC(key);
                         EditorGUILayout.PrefixLabel(name);
                     }
 
