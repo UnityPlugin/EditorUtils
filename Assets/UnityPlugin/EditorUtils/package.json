@@ -3,7 +3,7 @@
     "displayName": "Editor Utils",
     "unity": "2019.4",
     "version": "1.0.0",
-    "description": "Editor Utils(IMGUI/Editor)\n",
+    "description": "Editor Utils(IMGUI/Editor)\n\nOptions:\ngit@github.com:UnityPlugin/Bridge.git?path=/Assets/UnityPlugin/Bridge\n",
     "author": {
         "name": "zeroWq"
     }

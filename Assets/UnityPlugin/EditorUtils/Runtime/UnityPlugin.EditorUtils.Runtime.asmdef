@@ -1,0 +1,21 @@
+{
+    "name": "UnityPlugin.EditorUtils.Runtime",
+    "references": [
+        "UnityPlugin.Bridge.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.zerowq.unityplugin.bridge",
+            "expression": "1.0.0",
+            "define": "USE_BRIDGE"
+        }
+    ],
+    "noEngineReferences": false
+}

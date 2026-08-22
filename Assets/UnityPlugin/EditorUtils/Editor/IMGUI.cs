@@ -12,17 +12,34 @@ namespace UnityPlugin.EditorUtils
     {
         static Dictionary<string, GUIContent> _guiContentCache = new Dictionary<string, GUIContent>();
 
-        static GUIContent _tempContent;
+        static GUIContent _tempContent1;
+        static GUIContent _tempContent2;
 
         public static GUIContent TmpC(string text = null, Texture image = null, string tooltip = null)
         {
-            if (_tempContent == null) _tempContent = new GUIContent();
+            return TC1(text, image, tooltip);
+        }
 
-            _tempContent.text = text;
-            _tempContent.image = image;
-            _tempContent.tooltip = tooltip;
+        public static GUIContent TC1(string text = null, Texture image = null, string tooltip = null)
+        {
+            if (_tempContent1 == null) _tempContent1 = new GUIContent();
 
-            return _tempContent;
+            _tempContent1.text = text;
+            _tempContent1.image = image;
+            _tempContent1.tooltip = tooltip;
+
+            return _tempContent1;
+        }
+
+        public static GUIContent TC2(string text = null, Texture image = null, string tooltip = null)
+        {
+            if (_tempContent2 == null) _tempContent2 = new GUIContent();
+
+            _tempContent2.text = text;
+            _tempContent2.image = image;
+            _tempContent2.tooltip = tooltip;
+
+            return _tempContent2;
         }
 
         public static GUIContent GetC(string name, string text = null, Texture image = null, string tooltip = null)
@@ -359,10 +376,10 @@ namespace UnityPlugin.EditorUtils
             return Scroll(label, false, options);
         }
 
-        public static ScrollScope Scroll(ref Vector2 pos, params GUILayoutOption[] options)
+        public static ScrollScope Scroll(Vector2 pos, params GUILayoutOption[] options)
         {
             var scope = new ScrollScope();
-            scope.Begin(ref pos, options);
+            scope.Begin(pos, options);
             return scope;
         }
 
@@ -389,7 +406,7 @@ namespace UnityPlugin.EditorUtils
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, options);
             }
 
-            public void Begin(ref Vector2 pos, params GUILayoutOption[] options)
+            public void Begin(Vector2 pos, params GUILayoutOption[] options)
             {
                 scrollPosition = pos;
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, options);

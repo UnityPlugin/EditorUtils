@@ -34,6 +34,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.zerowq.unityplugin.bridge": {
+      "version": "ssh://git@github.com/UnityPlugin/Bridge.git?path=/Assets/UnityPlugin/Bridge",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "490236376a4b39abfd8281f6d58ee1f958d6a2b0"
+    },
     "com.zerowq.unityplugin.packageeditor": {
       "version": "ssh://git@github.com/UnityPlugin/PackageEditor.git?path=/Assets/UnityPlugin/PackageEditor",
       "depth": 0,
