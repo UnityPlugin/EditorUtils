@@ -12,19 +12,80 @@ namespace UnityPlugin.EditorUtils
     {
         static Dictionary<string, GUIContent> _guiContentCache = new Dictionary<string, GUIContent>();
 
-        public static GUIContent GetGUIContent(string name)
+        static GUIContent _tempContent1;
+        static GUIContent _tempContent2;
+
+        public static GUIContent TmpC(string text = null, Texture image = null, string tooltip = null)
+        {
+            return TC1(text, image, tooltip);
+        }
+
+        public static GUIContent TC1(string text = null, Texture image = null, string tooltip = null)
+        {
+            if (_tempContent1 == null) _tempContent1 = new GUIContent();
+
+            _tempContent1.text = text;
+            _tempContent1.image = image;
+            _tempContent1.tooltip = tooltip;
+
+            return _tempContent1;
+        }
+
+        public static GUIContent TC2(string text = null, Texture image = null, string tooltip = null)
+        {
+            if (_tempContent2 == null) _tempContent2 = new GUIContent();
+
+            _tempContent2.text = text;
+            _tempContent2.image = image;
+            _tempContent2.tooltip = tooltip;
+
+            return _tempContent2;
+        }
+
+        public static GUIContent GetC(string name, string text = null, Texture image = null, string tooltip = null)
+        {
+            return GetGUIContent(name, text, image, tooltip);
+        }
+
+        public static GUIContent GetGUIContent(string name, string text = null, Texture image = null, string tooltip = null)
         {
             if (!_guiContentCache.TryGetValue(name, out var label))
             {
                 label = new GUIContent(name);
                 _guiContentCache[name] = label;
             }
+
+            if (!string.IsNullOrEmpty(text)) label.text = text;
+            if (image) label.image = image;
+            if (!string.IsNullOrEmpty(tooltip)) label.tooltip = tooltip;
             return label;
+        }
+
+        public static void ClearGUIContent(string removeKey = null)
+        {
+            if (string.IsNullOrEmpty(removeKey))
+            {
+                _guiContentCache.Clear();
+            }
+            else
+            {
+
+                var list = new List<string>();
+                foreach (var key in _guiContentCache.Keys)
+                {
+                    if (key.Contains(removeKey)) list.Add(key);
+                }
+
+                for (var i = 0; i < list.Count; i++)
+                {
+                    _guiContentCache.Remove(list[i]);
+                }
+            }
         }
 
         public static T ObjectField<T>(string name, T obj) where T : Object
         {
-            return EditorGUILayout.ObjectField(GetGUIContent(name), obj, typeof(T), false) as T;
+            return EditorGUILayout.ObjectField(GetC(name), obj, typeof(T), false) as T;
         }
 
         #region Event
@@ -41,7 +102,6 @@ namespace UnityPlugin.EditorUtils
 
             return (int)_lastControlIdField.GetValue(null);
         }
-
 
         public static bool IsLastControlClick()
         {
@@ -89,7 +149,7 @@ namespace UnityPlugin.EditorUtils
                 {
                     fold = true;
                 }
-                name = GetGUIContent(key);
+                name = GetC(key);
 
                 if (headerGroup)
                 {
@@ -243,7 +303,7 @@ namespace UnityPlugin.EditorUtils
             public void Begin(string label, params GUILayoutOption[] options)
             {
                 key = label;
-                name = GetGUIContent(label);
+                name = GetC(label);
                 EditorGUILayout.BeginHorizontal(options);
                 EditorGUILayout.PrefixLabel(name);
 
@@ -315,10 +375,10 @@ namespace UnityPlugin.EditorUtils
             return Scroll(label, false, options);
         }
 
-        public static ScrollScope Scroll(ref Vector2 pos, params GUILayoutOption[] options)
+        public static ScrollScope Scroll(Vector2 pos, params GUILayoutOption[] options)
         {
             var scope = new ScrollScope();
-            scope.Begin(ref pos, options);
+            scope.Begin(pos, options);
             return scope;
         }
 
@@ -336,7 +396,7 @@ namespace UnityPlugin.EditorUtils
 
                     if (showLabel)
                     {
-                        name = GetGUIContent(key);
+                        name = GetC(key);
                         EditorGUILayout.PrefixLabel(name);
                     }
 
@@ -345,7 +405,7 @@ namespace UnityPlugin.EditorUtils
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, options);
             }
 
-            public void Begin(ref Vector2 pos, params GUILayoutOption[] options)
+            public void Begin(Vector2 pos, params GUILayoutOption[] options)
             {
                 scrollPosition = pos;
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, options);

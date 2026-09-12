@@ -2,7 +2,7 @@
   "dependencies": {
     "com.unity.ext.nunit": {
       "version": "1.0.6",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -24,8 +24,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.31",
-      "depth": 1,
+      "version": "1.1.33",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.6",
@@ -33,6 +33,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.zerowq.unityplugin.packageeditor": {
+      "version": "ssh://git@github.com/UnityPlugin/PackageEditor.git?path=/Assets/UnityPlugin/PackageEditor",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "cce948c7d47fe793db95b47d0e099e24aa0c8f96"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
